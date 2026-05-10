@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice - <%= order.orderNumber %></title>
+    <style>
+        body {
+            font-family: "Helvetica", "Arial", "MS Gothic", sans-serif;
+            margin: 0;
+            padding: 40px;
+            color: #333;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+        .logo {
+            width: 80px;
+        }
+        .invoice-title {
+            text-align: center;
+            flex-grow: 1;
+        }
+        .invoice-title h1 {
+            margin: 0;
+            color: #E11D48;
+            font-size: 32px;
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+        .invoice-title p {
+            margin: 5px 0 0;
+            font-size: 16px;
+            color: #E11D48;
+            font-weight: bold;
+        }
+        .meta-info {
+            text-align: right;
+            font-weight: bold;
+        }
+        .company-info {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #EEE;
+            padding-bottom: 10px;
+        }
+        .customer-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .customer-box {
+            width: 60%;
+        }
+        .customer-header {
+            font-weight: bold;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr 80px 1fr;
+            gap: 5px;
+        }
+        .label {
+            font-weight: bold;
+        }
+        .value {
+            border-bottom: 1px dashed #DDD;
+        }
+        .full-width {
+            grid-column: span 3;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background-color: #FAFAFA;
+            border-bottom: 1px solid #EEE;
+            padding: 8px;
+            text-align: left;
+            font-size: 9px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #F5F5F5;
+            font-size: 10px;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .totals-section {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .totals-table {
+            width: 300px;
+        }
+        .totals-table td {
+            border-bottom: none;
+            padding: 5px 8px;
+        }
+        .grand-total {
+            background-color: #FAFAFA;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .bank-details {
+            margin-top: 40px;
+            width: 60%;
+            font-size: 10px;
+        }
+        .bank-row {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        .bank-label {
+            width: 100px;
+            font-weight: bold;
+        }
+        .footer-note {
+            margin-top: 30px;
+            font-size: 9px;
+            color: #999;
+        }
+        .stamp-area {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            text-align: right;
+        }
+        .stamp-box {
+            border-top: 1px solid #333;
+            width: 200px;
+            padding-top: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <!-- Placeholder for logo -->
+            <svg width="60" height="60" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" stroke="#333" stroke-width="2" fill="none" />
+                <text x="50" y="55" font-size="12" text-anchor="middle" font-family="Arial" font-weight="bold">LOGO</text>
+            </svg>
+        </div>
+        <div class="invoice-title">
+            <h1>INVOICE</h1>
+            <p>SuperShop Ltd.</p>
+        </div>
+        <div class="meta-info">
+            <p><%= new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+            <p>NO. <%= order.orderNumber %></p>
+        </div>
+    </div>
+
+    <div class="company-info">
+        <p>Kanagawa Prefecture, Yokohama City, Naka Ward, Noge-Cho 3-Chome 131-1 Cosmos Sakuragicho Grand Pole 1F</p>
+        <p>Tel : 045-250-3490 &nbsp;&nbsp; Fax : 045-326-6057 &nbsp;&nbsp; URL : https://www.ninkipal.jp &nbsp;&nbsp; Registration number : T102000101xxxx</p>
+    </div>
+
+    <div class="customer-section">
+        <div class="customer-box">
+            <div class="customer-header">
+                <span>お客様 / CUSTOMER</span>
+                <span>お客様番号 / CUSTOMER : <%= order.user?.toString().slice(-6).toUpperCase() || 'GUEST' %></span>
+            </div>
+            <div class="details-grid">
+                <div class="label">Address</div>
+                <div class="value full-width"><%= order.shippingAddress.street %>, <%= order.shippingAddress.city %>, <%= order.shippingAddress.country %></div>
+                
+                <div class="label">Zip :</div>
+                <div class="value"><%= order.shippingAddress.zipCode %></div>
+                <div class="label">Company Name :</div>
+                <div class="value">----------</div>
+                
+                <div class="label">Prefecture :</div>
+                <div class="value"><%= order.shippingAddress.state %></div>
+                <div class="label">First Name :</div>
+                <div class="value"><%= order.user?.name?.split(' ')[0] || 'Customer' %></div>
+                
+                <div class="label">Ward :</div>
+                <div class="value">----------</div>
+                <div class="label">Last Name :</div>
+                <div class="value"><%= order.user?.name?.split(' ')[1] || 'Name' %></div>
+                
+                <div class="label">Tel :</div>
+                <div class="value">----------</div>
+                <div class="label">Email :</div>
+                <div class="value"><%= order.user?.email || '----------' %></div>
+            </div>
+        </div>
+        <div style="text-align: right;">
+            <p>To : Mr./Ms.</p>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center">Sl</th>
+                    <th>Date / Order ID</th>
+                    <th>Product name / Code</th>
+                    <th>Expiry date</th>
+                    <th class="text-center">Qty</th>
+                    <th class="text-right">Unit Price</th>
+                    <th class="text-right">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% order.products.forEach((item, index) => { %>
+                <tr>
+                    <td class="text-center"><%= (index + 1).toString().padStart(2, '0') %></td>
+                    <td>
+                        <%= new Date(order.createdAt).toLocaleDateString() %><br/>
+                        <span style="font-size: 8px; color: #999;"><%= order.orderNumber %></span>
+                    </td>
+                    <td>
+                        <strong><%= item.product?.name || 'Product' %></strong><br/>
+                        <span style="font-size: 8px; color: #999;"><%= item.product?._id?.toString().slice(-8).toUpperCase() %></span>
+                    </td>
+                    <td>2027/06/18</td>
+                    <td class="text-center"><%= item.quantity %></td>
+                    <td class="text-right">$<%= item.price.toLocaleString() %></td>
+                    <td class="text-right">$<%= (item.price * item.quantity).toLocaleString() %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="totals-section">
+        <table class="totals-table">
+            <tr>
+                <td>Sub-total</td>
+                <td class="text-right">$<%= order.subtotal.toLocaleString() %></td>
+            </tr>
+            <tr>
+                <td>Tax (10%)</td>
+                <td class="text-right">$<%= order.tax.toLocaleString() %></td>
+            </tr>
+            <tr>
+                <td>Shipping</td>
+                <td class="text-right">$<%= order.shipping.toLocaleString() %></td>
+            </tr>
+            <tr class="grand-total">
+                <td>Total :</td>
+                <td class="text-right text-[#E11D48]">$<%= order.total.toLocaleString() %></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="bank-details">
+        <div class="bank-row">
+            <div class="bank-label">Account Name :</div>
+            <div class="bank-value">Ninkipal Co.,Ltd</div>
+        </div>
+        <div class="bank-row">
+            <div class="bank-label">Account No :</div>
+            <div class="bank-value">4611694</div>
+        </div>
+        <div class="bank-row">
+            <div class="bank-label">Bank Name :</div>
+            <div class="bank-value">BANK OF MITSUBISHI TOKYO UFJ</div>
+        </div>
+        <div class="bank-row">
+            <div class="bank-label">Branch Name :</div>
+            <div class="bank-value">YOKOHAMA BRANCH</div>
+        </div>
+        <div class="bank-row">
+            <div class="bank-label">SWIFT Code :</div>
+            <div class="bank-value">BOTK JP JT</div>
+        </div>
+    </div>
+
+    <p class="footer-note">Please make the telegraphic (wire) transfer to the company account within 3 days from the date of invoice.</p>
+
+    <div class="stamp-area">
+        <div class="stamp-box">
+            COMPANY STAMP
+        </div>
+        <p style="font-size: 10px; margin-top: 5px;">ジョナ フェリックス エチュル</p>
+    </div>
+</body>
+</html>
