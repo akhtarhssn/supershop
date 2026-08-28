@@ -23,12 +23,13 @@ const updateAccessToken = (newToken: string) => {
 let mutexPromise: Promise<void> | null = null;
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1",
+  baseUrl: process.env.NEXT_PUBLIC_API_URL || "https://supershop-server-dun.vercel.app/api/v1",
   credentials: "include",
-  prepareHeaders: (headers) => {
+  prepareHeaders: (headers, { endpoint }) => {
     const token = getAccessToken();
 
-    if (token) {
+    // Do not add the expired token to the Authorization header for the refresh-token endpoint
+    if (token && endpoint !== "refreshToken") {
       headers.set("Authorization", `Bearer ${token}`);
     }
     return headers;
@@ -47,9 +48,10 @@ const baseQueryWithReauth: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
-    const errorData = result.error.data as ApiResponse<unknown>;
+    const errorData = result.error.data as any;
+    const errorMessage = errorData?.message || "";
 
-    if (errorData?.message === "jwt expired") {
+    if (errorMessage.toLowerCase().includes("jwt expired")) {
       if (!mutexPromise) {
         mutexPromise = (async () => {
           try {
@@ -71,6 +73,8 @@ const baseQueryWithReauth: BaseQueryFn<
             } else {
               useAuthStore.getState().logout();
             }
+          } catch (error) {
+            useAuthStore.getState().logout();
           } finally {
             mutexPromise = null;
           }
@@ -79,8 +83,10 @@ const baseQueryWithReauth: BaseQueryFn<
 
       await mutexPromise;
 
+      // Retry with the new token
       result = await baseQuery(args, api, extraOptions);
     } else {
+      // For other 401 errors, just logout
       useAuthStore.getState().logout();
     }
   }

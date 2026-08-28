@@ -119,7 +119,7 @@ export default function CheckoutPage() {
       const formData = getValues();
       const orderData = {
         products: items.map((item) => ({
-          product: item.product.id,
+          product: item.product._id,
           quantity: item.quantity,
           price: item.product.price,
         })),
@@ -157,7 +157,7 @@ export default function CheckoutPage() {
     try {
       const orderData = {
         products: items.map((item) => ({
-          product: item.product.id,
+          product: item.product._id,
           quantity: item.quantity,
           price: item.product.price,
         })),
@@ -517,7 +517,7 @@ export default function CheckoutPage() {
 
               <div className="space-y-3 max-h-48 overflow-y-auto mb-4">
                 {items.map(({ product, quantity }) => (
-                  <div key={product.id} className="flex gap-3 items-center">
+                  <div key={product._id} className="flex gap-3 items-center">
                     <div className="w-12 h-12 rounded-lg overflow-hidden bg-[#F9FAFB] shrink-0">
                       <img
                         src={product.image}

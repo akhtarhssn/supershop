@@ -220,7 +220,7 @@ const forgetPassword = async (userId: string) => {
     '10m',
   );
 
-  const resetUILink = `http://localhost:3000?id=${updatedUser?.id}&token=${resetToken}`;
+  const resetUILink = `https://supershop-two.vercel.app?id=${updatedUser?.id}&token=${resetToken}`;
   // console.log({ resetToken });
 
   sendMail(updatedUser!.email, {
@@ -336,7 +336,7 @@ const resendVerificationEmail = async (userId: string) => {
     emailVerificationExpires: expires,
   });
 
-  const frontendUrl = config.frontend_url || 'http://localhost:3000';
+  const frontendUrl = config.frontend_url || 'https://supershop-two.vercel.app';
   const verifyLink = `${frontendUrl}/auth/verify-email?token=${verificationToken}`;
 
   await sendVerificationEmail(user.email, {

@@ -9,7 +9,7 @@ import { useWishlistStore } from '@/store/wishlist';
 
 const WishListPage = () => {
   const wishlistItems = useWishlistStore((s) => s.items);
-  
+
   return (
     <section className="space-y-6">
       {/* Header */}
@@ -25,7 +25,7 @@ const WishListPage = () => {
             </p>
           </div>
         </div>
-        
+
         {wishlistItems.length > 0 && (
           <Button asChild variant="outline" className="border-indigo-100 text-[#6366F1] font-bold rounded-xl hover:bg-indigo-50">
             <Link href="/shop" className="flex items-center gap-2">
@@ -54,14 +54,14 @@ const WishListPage = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {wishlistItems.map((product) => (
-              <div key={product.id} className="transition-transform duration-300 hover:-translate-y-2">
+              <div key={product._id} className="transition-transform duration-300 hover:-translate-y-2">
                 <ProductCard product={product} />
               </div>
             ))}
           </div>
         )}
       </div>
-      
+
       {/* Suggestions/Footer */}
       {wishlistItems.length > 0 && (
         <div className="bg-indigo-600 rounded-[2rem] p-8 text-white relative overflow-hidden mt-10">

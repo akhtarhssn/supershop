@@ -74,7 +74,7 @@ This platform allows users to register as Buyers or Sellers. Sellers can create 
    bun install
    ```
    - Create a `.env.local` file in the `frontend` directory.
-   - Define `NEXT_PUBLIC_API_URL` (usually `http://localhost:5000/api/v1`).
+   - Define `NEXT_PUBLIC_API_URL` (usually `https://supershop-server-dun.vercel.app/api/v1`).
 
 ### Running the Project
 
@@ -90,7 +90,7 @@ This platform allows users to register as Buyers or Sellers. Sellers can create 
    npm run dev
    ```
 
-The application will be available at `http://localhost:3000` and the API at `http://localhost:5000`.
+The application will be available at `http://localhost:3000` and the API at `https://supershop-server-dun.vercel.app`.
 
 ---
 
@@ -121,7 +121,7 @@ e-commerce/
 
 This document provides a comprehensive list of all API endpoints available in the E-Commerce Multi-Vendor Platform.
 
-**Base URL**: `http://localhost:5000/api/v1`
+**Base URL**: `https://supershop-server-dun.vercel.app/api/v1`
 
 ---
 

@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { api } from "@/lib/api-client";
+import { useRegisterMutation } from "@/redux/api/authApi";
 
 type FormData = {
   name: string;
@@ -27,7 +27,6 @@ type FormData = {
 
 export default function SignupPage() {
   const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -39,6 +38,8 @@ export default function SignupPage() {
     setValue,
     formState: { errors },
   } = useForm<FormData>({ defaultValues: { role: "buyer", terms: false } });
+
+  const [registerUser, { isLoading: loading }] = useRegisterMutation();
 
   const password = watch("password");
   const selectedRole = watch("role");
@@ -70,10 +71,8 @@ export default function SignupPage() {
       return;
     }
 
-    setLoading(true);
     try {
       // If avatar was selected, convert to base64 string for now
-      // (In production you'd upload to Cloudinary first)
       let avatarUrl: string | undefined;
       if (avatarPreview) {
         avatarUrl = avatarPreview;
@@ -88,7 +87,7 @@ export default function SignupPage() {
         ...(avatarUrl && { avatar: avatarUrl }),
       };
 
-      await api.users.create(payload);
+      await registerUser(payload).unwrap();
 
       toast.success("Account created! Please check your email to verify your account.", {
         duration: 6000,
@@ -101,11 +100,9 @@ export default function SignupPage() {
       } else {
         router.push("/auth/login");
       }
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Registration failed";
+    } catch (err: any) {
+      const message = err?.data?.message || "Registration failed";
       toast.error(message, { position: "bottom-right" });
-    } finally {
-      setLoading(false);
     }
   };
 

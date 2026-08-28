@@ -11,6 +11,13 @@ export const authApi = baseApi.injectEndpoints({
       }),
       transformResponse: (res: ApiResponse<LoginResponse>) => res.data,
     }),
+    register: builder.mutation<ApiResponse<IUser>, any>({
+      query: (userData) => ({
+        url: "/users/create-user",
+        method: "POST",
+        body: userData,
+      }),
+    }),
     getMe: builder.query<ApiResponse<IUser>, void>({
       query: () => "/users/me",
       providesTags: ["User"],
@@ -33,5 +40,6 @@ export const {
   useGetMeQuery,
   useLoginMutation,
   useLogoutMutation,
+  useRegisterMutation,
   useGetSellersQuery,
 } = authApi;

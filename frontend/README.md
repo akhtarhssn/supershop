@@ -19,7 +19,7 @@ A high-performance, modern storefront for the E-Commerce Multi-Vendor Platform, 
 2. Set up environment variables:
    Create a `.env.local` file:
    ```env
-   NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
+   NEXT_PUBLIC_API_URL=https://supershop-server-dun.vercel.app/api/v1
    ```
 
 3. Run in development:

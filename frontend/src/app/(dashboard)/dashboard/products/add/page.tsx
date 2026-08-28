@@ -28,9 +28,9 @@ import {
 import { useGetCategoriesQuery } from "@/redux/api/categoryApi";
 import { useCreateProductMutation } from "@/redux/api/productApi";
 import { ICategory } from "@/types/types";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import Image from "next/image";
 
 export default function AddProductPage() {
   const router = useRouter();
@@ -46,7 +46,7 @@ export default function AddProductPage() {
 
   const categories = categoriesResponse?.data || [];
   const selectedCategoryObj = categories.find(
-    (c) => c._id === selectedCategory,
+    (c: ICategory) => c._id === selectedCategory,
   );
 
   console.log({ selectedCategory });
@@ -173,7 +173,7 @@ export default function AddProductPage() {
                       required
                       value={selectedCategory}
                       onValueChange={(value) => {
-                        setSelectedCategory(value);
+                        setSelectedCategory(value as string);
                       }}
                     >
                       <SelectTrigger className="w-full rounded border-gray-200 py-5">

@@ -47,15 +47,21 @@ const Example = () => {
             Or click to browse (max 5 files, up to 5MB each)
           </p>
         </div>
-        <FileUploadTrigger render={<Button variant="outline" size="sm" className="mt-2 w-fit" />}>Browse files
-                        </FileUploadTrigger>
+        <FileUploadTrigger asChild>
+          <Button variant="outline" size="sm" className="mt-2 w-fit">Browse files
+          </Button>
+        </FileUploadTrigger>
       </FileUploadDropzone>
       <FileUploadList>
         {files.map((file, index) => (
           <FileUploadItem key={index} value={file}>
             <FileUploadItemPreview />
             <FileUploadItemMetadata />
-            <FileUploadItemDelete render={<Button variant="ghost" size="icon" className="size-7" />}><X className="size-4" /></FileUploadItemDelete>
+            <FileUploadItemDelete asChild>
+              <Button variant="ghost" size="icon" className="size-7">
+                <X className="size-4" />
+              </Button>
+            </FileUploadItemDelete>
           </FileUploadItem>
         ))}
       </FileUploadList>

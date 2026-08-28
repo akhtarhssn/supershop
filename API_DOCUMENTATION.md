@@ -2,7 +2,7 @@
 
 This document provides a comprehensive list of all API endpoints available in the E-Commerce Multi-Vendor Platform.
 
-**Base URL**: `http://localhost:5000/api/v1`
+**Base URL**: `https://supershop-server-dun.vercel.app/api/v1`
 
 ---
 

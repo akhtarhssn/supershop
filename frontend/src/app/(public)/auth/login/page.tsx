@@ -29,6 +29,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const setAuth = useAuthStore((s) => s.setAuth);
+  const setAccessToken = useAuthStore((s) => s.setAccessToken);
   const {
     register,
     handleSubmit,
@@ -45,7 +46,8 @@ export default function LoginPage() {
       const loginRes = await login(data).unwrap();
       const accessToken = loginRes.accessToken;
 
-      setAuth(null, accessToken);
+      // 2. Set token so refetchMe can use it
+      setAccessToken(accessToken);
 
       // 3. Fetch user
       const meRes = await refetchMe().then((res) => res.data);

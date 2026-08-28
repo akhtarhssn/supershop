@@ -1,6 +1,6 @@
 export interface Product {
   id: string;
-  _id: string;
+  _id?: string;
   name: string;
   slug: string;
   description: string;
@@ -96,14 +96,14 @@ export interface BlogPost {
 }
 
 export const categories: Category[] = [
-  { id: "1", name: "Fresh Vegetables", slug: "fresh-vegetables", image: "/images/cat-vegetables.png", productCount: 48, color: "#4baf4f" },
-  { id: "2", name: "Fresh Fruits", slug: "fresh-fruits", image: "/images/cat-fruits.png", productCount: 36, color: "#f97316" },
-  { id: "3", name: "Dairy & Eggs", slug: "dairy-eggs", image: "/images/cat-dairy.png", productCount: 24, color: "#fbb400" },
-  { id: "4", name: "Meat & Fish", slug: "meat-fish", image: "/images/cat-meat.png", productCount: 30, color: "#ef4444" },
-  { id: "5", name: "Bakery", slug: "bakery", image: "/images/cat-bakery.png", productCount: 18, color: "#a16207" },
-  { id: "6", name: "Beverages", slug: "beverages", image: "/images/cat-beverages.png", productCount: 42, color: "#635ad9" },
-  { id: "7", name: "Snacks", slug: "snacks", image: "/images/cat-snacks.png", productCount: 28, color: "#ec4899" },
-  { id: "8", name: "Organic", slug: "organic", image: "/images/cat-organic.png", productCount: 22, color: "#16a34a" },
+  { id: "1", _id: "1", name: "Fresh Vegetables", slug: "fresh-vegetables", image: "/images/cat-vegetables.png", productCount: 48, color: "#4baf4f" },
+  { id: "2", _id: "2", name: "Fresh Fruits", slug: "fresh-fruits", image: "/images/cat-fruits.png", productCount: 36, color: "#f97316" },
+  { id: "3", _id: "3", name: "Dairy & Eggs", slug: "dairy-eggs", image: "/images/cat-dairy.png", productCount: 24, color: "#fbb400" },
+  { id: "4", _id: "4", name: "Meat & Fish", slug: "meat-fish", image: "/images/cat-meat.png", productCount: 30, color: "#ef4444" },
+  { id: "5", _id: "5", name: "Bakery", slug: "bakery", image: "/images/cat-bakery.png", productCount: 18, color: "#a16207" },
+  { id: "6", _id: "6", name: "Beverages", slug: "beverages", image: "/images/cat-beverages.png", productCount: 42, color: "#635ad9" },
+  { id: "7", _id: "7", name: "Snacks", slug: "snacks", image: "/images/cat-snacks.png", productCount: 28, color: "#ec4899" },
+  { id: "8", _id: "8", name: "Organic", slug: "organic", image: "/images/cat-organic.png", productCount: 22, color: "#16a34a" },
 ];
 
 export const products: Product[] = [

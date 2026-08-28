@@ -440,19 +440,21 @@ export default function EarningsPage() {
                 </CardDescription>
               </div>
               <Dialog open={showWithdraw} onOpenChange={setShowWithdraw}>
-                <DialogTrigger>
-                  <Button
-                    size="sm"
-                    className="bg-[#6366F1] hover:bg-[#4F46E5]"
-                    disabled={
-                      !wallet?.availableBalance ||
-                      (wallet?.bankDetails?.length || 0) === 0
-                    }
-                  >
-                    <DollarSign className="w-4 h-4 mr-2" />
-                    Withdraw
-                  </Button>
-                </DialogTrigger>
+                <DialogTrigger
+                  render={
+                    <Button
+                      size="sm"
+                      className="bg-[#6366F1] hover:bg-[#4F46E5]"
+                      disabled={
+                        !wallet?.availableBalance ||
+                        (wallet?.bankDetails?.length || 0) === 0
+                      }
+                    >
+                      <DollarSign className="w-4 h-4 mr-2" />
+                      Withdraw
+                    </Button>
+                  }
+                />
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Request Withdrawal</DialogTitle>

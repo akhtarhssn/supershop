@@ -20,7 +20,7 @@ export default function OrderActionButtons({ orderId, orderNumber }: Props) {
   const handleDownload = async () => {
     try {
       setIsDownloading(true)
-      
+
       // Get the token from local storage (matching api-client logic)
       const raw = localStorage.getItem("auth-storage")
       const parsed = JSON.parse(raw || '{}')
@@ -31,8 +31,8 @@ export default function OrderActionButtons({ orderId, orderNumber }: Props) {
         return
       }
 
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1"
-      
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://supershop-server-dun.vercel.app/api/v1"
+
       const response = await fetch(`${API_BASE_URL}/orders/${orderId}/invoice`, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -50,7 +50,7 @@ export default function OrderActionButtons({ orderId, orderNumber }: Props) {
       a.click()
       window.URL.revokeObjectURL(url)
       document.body.removeChild(a)
-      
+
       toast.success("Invoice downloaded successfully!")
     } catch (error) {
       console.error(error)
@@ -62,15 +62,15 @@ export default function OrderActionButtons({ orderId, orderNumber }: Props) {
 
   return (
     <div className="flex items-center gap-3">
-      <Button 
-        variant="outline" 
+      <Button
+        variant="outline"
         onClick={handlePrint}
         className="flex-1 md:flex-none h-11 rounded-xl border-gray-100 gap-2 font-bold text-xs print:hidden"
       >
         <Printer className="w-4 h-4" />
         Print Invoice
       </Button>
-      <Button 
+      <Button
         disabled={isDownloading}
         onClick={handleDownload}
         className="flex-1 md:flex-none h-11 rounded-xl bg-[#6366F1] hover:bg-[#4F46E5] gap-2 font-bold text-xs shadow-lg shadow-indigo-600/20 print:hidden"

@@ -39,7 +39,7 @@ const createUserIntoDB = async (password: string, payload: Partial<IUser>) => {
   const newUser = await User.create(userData);
 
   // Send Email asynchronously
-  const frontendUrl = config.frontend_url || 'http://localhost:3000';
+  const frontendUrl = config.frontend_url || 'https://supershop-two.vercel.app';
   const verifyLink = `${frontendUrl}/auth/verify-email?token=${verificationToken}`;
 
   try {

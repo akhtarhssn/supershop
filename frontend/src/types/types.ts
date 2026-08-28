@@ -61,7 +61,7 @@ export interface Product {
   unit: string;
   weight: string;
   brand: string;
-  tags: string[];
+  tags: string[]
   rating?: number;
   reviewCount?: number;
   isFeatured?: boolean;

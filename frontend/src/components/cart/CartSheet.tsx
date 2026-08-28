@@ -71,7 +71,7 @@ export function CartSheet({ children }: { children?: React.ReactNode }) {
             <ScrollArea className="h-full">
               <div className="p-6 space-y-6">
                 {items.map((item) => (
-                  <div key={item.product.id} className="flex gap-4">
+                  <div key={item.product._id} className="flex gap-4">
                     <div className="w-20 h-20 rounded-xl overflow-hidden border border-[#e8e8f0] bg-white shrink-0">
                       <Image
                         src={item.product.image}
@@ -90,7 +90,7 @@ export function CartSheet({ children }: { children?: React.ReactNode }) {
                           {item.product.name}
                         </Link>
                         <button
-                          onClick={() => removeItem(item.product.id)}
+                          onClick={() => removeItem(item.product._id)}
                           className="text-gray-400 hover:text-red-500 transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -100,14 +100,14 @@ export function CartSheet({ children }: { children?: React.ReactNode }) {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center border border-[#e8e8f0] rounded-lg">
                           <button
-                            onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                            onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
                             className="p-1 hover:bg-gray-50 text-gray-500"
                           >
                             <Minus className="w-3.5 h-3.5" />
                           </button>
                           <span className="w-8 text-center text-xs font-bold">{item.quantity}</span>
                           <button
-                            onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                            onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
                             className="p-1 hover:bg-gray-50 text-gray-500"
                           >
                             <Plus className="w-3.5 h-3.5" />

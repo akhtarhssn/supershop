@@ -39,6 +39,7 @@ import { useAuthStore } from "@/store/auth";
 import { api } from "@/lib/api-client";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useGetMeQuery } from "@/redux/api/authApi";
 import NotificationBell from "@/components/layout/NotificationBell";
 
 // ─── Nav items per role ───────────────────────────────────────────────────────
@@ -96,7 +97,6 @@ function SidebarContent({
         .slice(0, 2)
     : "?";
 
-  console.log({ user });
   return (
     <div className="flex flex-col h-full bg-[#000000]">
       {/* Avatar */}
@@ -334,16 +334,25 @@ export default function DashboardLayout({
   const { user, isAuthenticated, logout } = useAuthStore();
   const [isMounted, setIsMounted] = useState(false);
 
+  // This will trigger the baseApi's reauth logic if the token is expired
+  // or call logout() if the session is completely invalid.
+  const { isError: isUserError } = useGetMeQuery(undefined, {
+    skip: !isAuthenticated, // Only run if we think we are logged in
+  });
+
   useLayoutEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // Redirect if not logged in or if buyer (buyers go to /account)
+  // Redirect if not logged in or if user data failed to fetch (auth error)
   useEffect(() => {
-    if (isMounted && !isAuthenticated) {
-      router.push("/auth/login");
+    if (isMounted) {
+      if (!isAuthenticated || isUserError) {
+        logout();
+        router.push("/auth/login");
+      }
     }
-  }, [isMounted, isAuthenticated, router]);
+  }, [isMounted, isAuthenticated, isUserError, logout, router]);
 
   if (!isMounted) {
     return (

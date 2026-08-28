@@ -72,7 +72,7 @@ export default function CartPage() {
           <div className="lg:col-span-2 space-y-4">
             {items.map(({ product, quantity }) => (
               <div
-                key={product.id}
+                key={product._id}
                 className="bg-white rounded-md border border-[#D1D5DB] p-5 flex gap-4"
               >
                 <Link href={`/shop/${product.slug}`} className="shrink-0">
@@ -103,7 +103,7 @@ export default function CartPage() {
                     </div>
                     <button
                       onClick={() => {
-                        removeItem(product.id);
+                        removeItem(product._id);
                         toast.success("Item removed from cart.");
                       }}
                       className="p-1.5 text-gray-400 hover:text-red-500 transition-colors shrink-0"
@@ -115,7 +115,7 @@ export default function CartPage() {
                   <div className="flex items-center justify-between mt-3">
                     <div className="flex items-center gap-1 border border-[#D1D5DB] rounded-lg overflow-hidden">
                       <button
-                        onClick={() => updateQuantity(product.id, quantity - 1)}
+                        onClick={() => updateQuantity(product._id, quantity - 1)}
                         className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-[#F9FAFB] transition-colors"
                       >
                         <Minus className="w-3 h-3" />
@@ -124,7 +124,7 @@ export default function CartPage() {
                         {quantity}
                       </span>
                       <button
-                        onClick={() => updateQuantity(product.id, quantity + 1)}
+                        onClick={() => updateQuantity(product._id, quantity + 1)}
                         className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-[#F9FAFB] transition-colors"
                       >
                         <Plus className="w-3 h-3" />
